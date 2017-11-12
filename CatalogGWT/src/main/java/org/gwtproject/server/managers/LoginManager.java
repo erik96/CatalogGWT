@@ -6,9 +6,9 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
-import org.gwtproject.server.Principal;
 import org.gwtproject.server.persistence.AdUser;
 import org.gwtproject.server.security.DbUsersRealm;
+import org.gwtproject.server.security.Principal;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -44,11 +44,11 @@ public class LoginManager {
 
         CriteriaQuery<AdUser> q = cb.createQuery(AdUser.class);
         Root<AdUser> c = q.from(AdUser.class);
-        ParameterExpression<String> p = cb.parameter(String.class);
-        q.select(c).where(cb.equal(c.get("username"), p));
+        ParameterExpression<String> usernameP = cb.parameter(String.class, "username");
+        q.select(c).where(cb.equal(c.get("username"), usernameP));
 
         TypedQuery<AdUser> query = em.createQuery(q);
-        query.setParameter("p", username);
+        query.setParameter("username", username);
         try {
             user = query.getSingleResult();
         } catch (Exception e) {

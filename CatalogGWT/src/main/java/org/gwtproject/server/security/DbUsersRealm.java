@@ -7,6 +7,7 @@ import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -48,7 +49,7 @@ public class DbUsersRealm extends AuthorizingRealm {
 
     public static final CredentialsMatcher createCredentialMatcher() {
         HashedCredentialsMatcher credentialMatcher = new HashedCredentialsMatcher();
-        credentialMatcher.setHashAlgorithmName(Sha256Hash.ALGORITHM_NAME);
+        credentialMatcher.setHashAlgorithmName(Md5Hash.ALGORITHM_NAME);
         credentialMatcher.setHashIterations(HASH_ITERATIONS);
         credentialMatcher.setStoredCredentialsHexEncoded(false);
         return credentialMatcher;
@@ -68,14 +69,14 @@ public class DbUsersRealm extends AuthorizingRealm {
         CriteriaQuery<AdUser> q = cb.createQuery(AdUser.class);
         Root<AdUser> u = q.from(AdUser.class);
 
-        ParameterExpression<String> usernameP = cb.parameter(String.class);
+        ParameterExpression<String> usernameP = cb.parameter(String.class, "username");
 
         q.select(u)
                 .where(cb.equal(u.get("username"), usernameP))
         ;
 
         TypedQuery<AdUser> query = em.createQuery(q);
-        query.setParameter("usernameP", userName);
+        query.setParameter("username", userName);
         try {
             AdUser user = query.getSingleResult();
 

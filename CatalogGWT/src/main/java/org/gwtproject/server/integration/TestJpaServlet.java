@@ -2,6 +2,7 @@ package org.gwtproject.server.integration;
 
 import com.google.inject.Provider;
 import com.google.inject.persist.Transactional;
+import org.gwtproject.server.managers.LoginManager;
 import org.gwtproject.server.persistence.AdUser;
 
 import javax.inject.Inject;
@@ -21,18 +22,22 @@ import java.io.PrintWriter;
 @Singleton
 public class TestJpaServlet extends HttpServlet {
 
-    @Inject
-    public TestJpaServlet(Provider<EntityManager> emp) {
-        this.emp = emp;
-    }
-
     private Provider<EntityManager> emp;
+    private Provider<LoginManager> lmp;
+
+    @Inject
+    public TestJpaServlet(Provider<EntityManager> emp, Provider<LoginManager> lmp) {
+        this.emp = emp;
+        this.lmp = lmp;
+    }
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
             throws ServletException, IOException {
 
-        long id = testCreateUser();
+//        long id = testCreateUser();
+        boolean result = lmp.get().doLogin("user", "test");
+
 
         PrintWriter out = response.getWriter();
         out.println("<HTML>");
@@ -40,8 +45,7 @@ public class TestJpaServlet extends HttpServlet {
         out.println("<TITLE>JPA Testing</TITLE>");
         out.println("</HEAD>");
         out.println("<BODY>");
-        out.println(String.format("user id = %d", id));
-//        out.println(user.getId());
+        out.println(String.format("login = %s", result));
         out.println("</BODY>");
         out.println("</HTML>");
         out.flush();
