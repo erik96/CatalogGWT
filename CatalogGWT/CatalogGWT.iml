@@ -16,6 +16,9 @@
     </facet>
     <facet type="gwt" name="GWT">
       <configuration>
+        <setting name="compilerMaxHeapSize" value="1024" />
+        <setting name="gwtScriptOutputStyle" value="DETAILED" />
+        <setting name="gwtSdkUrl" value="file://$MODULE_DIR$/../../tools/gwt-2.8.2" />
         <setting name="webFacet" value="Web" />
       </configuration>
     </facet>
