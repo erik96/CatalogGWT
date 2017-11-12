@@ -50,8 +50,9 @@ public class DbUsersRealm extends AuthorizingRealm {
     public static final CredentialsMatcher createCredentialMatcher() {
         HashedCredentialsMatcher credentialMatcher = new HashedCredentialsMatcher();
         credentialMatcher.setHashAlgorithmName(Md5Hash.ALGORITHM_NAME);
-        credentialMatcher.setHashIterations(HASH_ITERATIONS);
-        credentialMatcher.setStoredCredentialsHexEncoded(false);
+//        credentialMatcher.setHashIterations(HASH_ITERATIONS);
+        credentialMatcher.setStoredCredentialsHexEncoded(true);
+
         return credentialMatcher;
     }
 

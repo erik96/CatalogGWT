@@ -36,7 +36,7 @@ public class TestJpaServlet extends HttpServlet {
             throws ServletException, IOException {
 
 //        long id = testCreateUser();
-        boolean result = lmp.get().doLogin("user", "test");
+        boolean result = lmp.get().doLogin("user", "test2");
 
 
         PrintWriter out = response.getWriter();
