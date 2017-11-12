@@ -1,4 +1,4 @@
-package org.gwtproject.server;
+package org.gwtproject.server.security;
 
 /**
  * Created by erik on 11/13/17
