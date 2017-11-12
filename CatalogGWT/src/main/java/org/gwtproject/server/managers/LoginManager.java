@@ -74,17 +74,11 @@ public class LoginManager {
             em.flush();
 
             return result;
-        } catch (IncorrectCredentialsException e) {
-            //todo
-        } catch (LockedAccountException e) {
-            //todo
-        } catch (UnknownAccountException e) {
-            //todo
         } catch (AuthenticationException e) {
+            e.printStackTrace();
             subject.logout();
+            return false;
         }
-
-        return true;
     }
 
     private boolean loadAccount(AdUser user) {
